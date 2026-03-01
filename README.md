@@ -47,6 +47,30 @@ This project demonstrates structured backend architecture using a multi-app Djan
 
 Media files and environment variables are excluded from version control.
 
+## 🏗️ Architecture
+
+The system follows a modular Django multi-app architecture:
+
+- Each domain (students, teachers, courses, enrollments, materials) is isolated into dedicated apps.
+- Custom User model implemented for role-based authentication.
+- PostgreSQL used for relational integrity and scalability.
+- Media handling configured separately for production readiness.
+
+## ⚙️ Local Setup
+
+1. Clone the repository
+2. Create virtual environment:
+   python -m venv myenv
+3. Activate environment:
+   myenv\Scripts\activate
+4. Install dependencies:
+   pip install -r requirements.txt
+5. Configure .env file
+6. Run migrations:
+   python manage.py migrate
+7. Start server:
+   python manage.py runserver
+
 ## 📸 Application Preview
 
 ### 🔐 Authentication
@@ -78,3 +102,4 @@ Media files and environment variables are excluded from version control.
 
 ### 📋 Enrolled Students
 ![](screenshots/enrolled-students.png)
+
