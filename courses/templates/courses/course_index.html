@@ -1,0 +1,181 @@
+{% extends "students/base.html" %}
+{% load static %}
+
+{% block title %}
+{% if subject %}{{ subject.name }} Courses{% else %}All Courses{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-3">
+
+    <h2 class="mb-4" style="color:#371c69;">
+        {% if subject %}
+        Courses under {{ subject.name }}
+        {% else %}
+        All Courses
+        {% endif %}
+    </h2>
+
+    {% if courses %}
+    <div class="row g-4">
+        {% for course in courses %}
+        <div class="col-12">
+
+            <div class="card h-100 shadow-sm dashboard-card">
+                <div class="row g-0 align-items-center">
+
+                    <!-- IMAGE COLUMN -->
+                    {% if course.image %}
+                    <div class="col-5 col-sm-4">
+                        <img src="{{ course.image.url }}"
+                            class="img-fluid rounded-start h-100 object-fit-cover course-img" alt="{{ course.name }}">
+                    </div>
+                    {% endif %}
+
+                    <!-- TEXT COLUMN -->
+                    <div class="col-7 col-sm-8">
+                        <div class="card-body d-flex flex-column h-100">
+
+                            <div>
+                                <h5 class="card-title">{{ course.name }}</h5>
+
+                            </div>
+
+                            <div class="mt-auto">
+                                <small class="teacher-text">
+                                    Subject: {{ course.subject.name }}
+                                </small><br>
+                                <small class="teacher-text">
+                                    Teacher:
+                                    {% if course.teacher.first_name or course.teacher.last_name %}
+                                    {{ course.teacher.first_name }} {{ course.teacher.last_name }}
+                                    {% else %}
+                                    {{ course.teacher.username }}
+                                    {% endif %}
+                                </small>
+                            </div>
+
+                            <!-- ENROLL BUTTON -->
+                            {% if request.user.is_authenticated and request.user.is_student %}
+
+                            {% if course.id in enrolled_course_ids %}
+
+                            <!-- ALREADY ENROLLED → OPEN COURSE -->
+                            <a href="{% url 'materials:course_materials' course.id %}"
+                                class="btn enroll-btn open-course-btn mt-3">
+                                Open Course
+                            </a>
+
+
+                            {% else %}
+
+                            <!-- NOT ENROLLED -->
+                            <form method="post" action="{% url 'enrollments:enroll' course.id %}" class="mt-3">
+                                {% csrf_token %}
+                                <button type="submit" class="btn enroll-btn">
+                                    Enroll
+                                </button>
+                            </form>
+
+                            {% endif %}
+
+                            {% endif %}
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No courses available.</p>
+    {% endif %}
+</div>
+
+<style>
+    /* =====================
+   DASHBOARD CARD STYLE
+   ===================== */
+
+    /* Font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    .dashboard-card {
+        border-radius: 30px;
+        background-color: #E6E6FA;
+        border: none;
+    }
+
+    /* Text */
+    .card-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1.6rem;
+        color: #2c1c5a;
+    }
+
+    .card-text {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        color: #333;
+    }
+
+    .teacher-text {
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #555;
+    }
+
+    /* Image */
+    .course-img {
+        max-height: 250px;
+        object-fit: cover;
+    }
+
+    .enroll-btn {
+        background-color: #371c69;
+        color: #ffffff;
+        border-radius: 30px;
+        padding: 8px 28px;
+        /* 🔥 FIX HERE */
+        font-size: 0.85rem;
+        font-weight: 500;
+        border: none;
+    }
+
+    /* Fix width ONLY for Open Course */
+    .open-course-btn {
+        width: 140px;
+        /* 🔥 FIX */
+        text-align: center;
+        padding: 8px 0 !important;
+    }
+
+
+    .enroll-btn:hover {
+        background-color: #2a144f;
+        color: white;
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 1.1rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+        }
+
+        .course-img {
+            max-height: 180px;
+        }
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "students/base.html" %}
+{% block title %}My Enrollments{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>My Enrolled Courses</h2>
+
+    {% if enrollments %}
+    <ul class="list-group mt-3">
+        {% for e in enrollments %}
+        <li class="list-group-item">
+            <strong>{{ e.course.name }}</strong><br>
+            <small>Joined on: {{ e.date_joined|date:"M d, Y" }}</small><br>
+
+            <!-- View Materials button -->
+            <a href="{% url 'materials:course_materials' e.course.id %}" class="btn btn-sm btn-outline-primary">
+                📘 View Materials
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>You are not enrolled in any courses yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

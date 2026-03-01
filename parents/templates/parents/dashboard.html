@@ -1,0 +1,17 @@
+{% extends "parents/base.html" %}
+{% block title %}Parent Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-3">
+        Welcome Parent, {{ request.user.get_full_name|default:request.user.username }}!
+    </h1>
+
+    <p class="lead">This is the <strong>Parent</strong> dashboard.</p>
+
+
+    <hr class="my-4">
+
+    <p>Place parent-specific features here (child progress, fees, messages, etc.).</p>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "students/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Subjects</h2>
+    <ul>
+        {% for subject in subjects %}
+        <li>
+            <a href="{% url 'subjects:subject_detail' subject.id %}">
+                {{ subject.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

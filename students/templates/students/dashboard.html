@@ -1,0 +1,115 @@
+{% extends "students/base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-3">
+    <h2 class="mb-4" style="color:#371c69;">My Courses</h2>
+    <div class="row g-4">
+        {% for enrollment in enrollments %}
+        <div class="col-12">
+            <div class="card h-100 shadow-sm" style="border-radius: 30px; background-color: #E6E6FA; border: none;">
+                <div class="row g-0 align-items-center">
+                    {% if enrollment.course.image %}
+                    <!-- Image column -->
+                    <div class="col-5 col-sm-4">
+                        <img src="{{ enrollment.course.image.url }}"
+                            class="img-fluid rounded-start h-100 object-fit-cover course-img"
+                            alt="{{ enrollment.course.name }}">
+                    </div>
+                    {% endif %}
+                    <!-- Text column -->
+                    <div class="col-7 col-sm-8">
+                        <div class="card-body d-flex flex-column h-100 course-text position-relative">
+                            <div>
+                                <h5 class="card-title">{{ enrollment.course.name }}</h5>
+                                <p class="card-text">{{ enrollment.course.description }}</p>
+                            </div>
+                            <div class="mt-5">
+                                <small class="text-muted teacher-text">
+                                    created by
+                                    {% if enrollment.course.teacher.first_name or enrollment.course.teacher.last_name %}
+                                    {{ enrollment.course.teacher.first_name }} {{ enrollment.course.teacher.last_name }}
+                                    {% else %}
+                                    {{ enrollment.course.teacher.username }}
+                                    {% endif %}
+                                </small>
+                            </div>
+
+                            <!-- Arrow button fixed to bottom-right -->
+                            <a href="{% url 'materials:course_materials' enrollment.course.id %}"
+                                class="btn btn-sm  d-flex align-items-center justify-content-center arrow-btn"
+                                style="background: #5b5fb3;">
+                                <i class="bi bi-arrow-right" style="color: white;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>You are not enrolled in any courses yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    /* Import a modern font */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    .card-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1.6rem;
+        color: #2c1c5a;
+    }
+
+    .card-text {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-size: 0.95rem;
+        color: #333;
+    }
+
+    .teacher-text {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: #555;
+    }
+
+    /* Default image sizing */
+    .course-img {
+        max-height: 250px;
+        object-fit: cover;
+    }
+
+    /* Arrow button styling */
+    .arrow-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 5px;
+        right: 20px;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 1.1rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+        }
+
+        .teacher-text {
+            font-size: 0.8rem;
+        }
+
+        .course-img {
+            max-height: 180px;
+        }
+    }
+</style>
+{% endblock %}

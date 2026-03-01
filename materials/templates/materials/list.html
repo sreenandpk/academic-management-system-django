@@ -1,0 +1,94 @@
+{% extends "students/base.html" %}
+{% block title %}Course Materials{% endblock %}
+
+{% block content %}
+
+<style>
+    .materials-header {
+        background: linear-gradient(135deg, #0d6efd, #4dabf7);
+        color: white;
+        padding: 30px;
+        border-radius: 16px;
+    }
+
+    .material-card {
+        border: none;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .material-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .material-date {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    .btn-outline-primary,
+    .btn-outline-secondary {
+        border-radius: 20px;
+        padding: 5px 14px;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="materials-header mb-4">
+        <h2 class="mb-1">📘 {{ course.name }}</h2>
+        <p class="mb-0 opacity-75">Course Materials & Resources</p>
+    </div>
+
+    {% if materials %}
+    <div class="row g-4">
+        {% for m in materials %}
+        <div class="col-12">
+            <div class="card material-card p-3">
+                <h5 class="fw-semibold">{{ m.title }}</h5>
+
+                <span class="material-date">
+                    Uploaded on {{ m.uploaded_on|date:"M d, Y" }}
+                </span>
+
+                {% if m.description %}
+                <p class="mt-2 text-muted">{{ m.description }}</p>
+                {% endif %}
+
+                <div class="mt-2">
+                    {% if m.file %}
+                    <a href="{{ m.file.url }}" class="btn btn-outline-primary btn-sm me-2">
+                        ⬇ Download
+                    </a>
+                    {% endif %}
+
+                    {% if m.link %}
+                    <a href="{{ m.link }}" class="btn btn-outline-secondary btn-sm" target="_blank">
+                        🔗 Open Link
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="alert alert-info mt-4">
+        No materials uploaded yet for this course.
+    </div>
+    {% endif %}
+
+    <!-- BACK BUTTON -->
+    <div class="mt-4">
+        <a href="{% url 'students:dashboard' %}" class="btn btn-dark px-4 rounded-pill">
+            ⬅ Back to dashboard
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
