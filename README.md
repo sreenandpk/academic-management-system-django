@@ -1,5 +1,4 @@
-# Academic Management System
-
+# Academic Management System (Django + PostgreSQL Backend)
 A modular academic management platform built with Django and PostgreSQL.
 
 ## Overview
@@ -102,4 +101,5 @@ The system follows a modular Django multi-app architecture:
 
 ### 📋 Enrolled Students
 ![](screenshots/enrolled-students.png)
+
 
