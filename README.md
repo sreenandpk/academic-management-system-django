@@ -46,3 +46,35 @@ This project demonstrates structured backend architecture using a multi-app Djan
 ## Note
 
 Media files and environment variables are excluded from version control.
+
+## 📸 Application Preview
+
+### 🔐 Authentication
+| Login | Signup |
+|-------|--------|
+| ![](screenshots/login.png) | ![](screenshots/signup.png) |
+
+---
+
+### 🎓 Student Dashboard
+![](screenshots/mycourses.png)
+
+---
+
+### 📂 Materials Access
+![](screenshots/material.png)
+
+---
+
+### 👨‍🏫 Teacher Dashboard
+![](screenshots/teacher-dashboard.png)
+
+---
+
+### ⬆️ Teacher Upload System
+![](screenshots/teaacher-upload.png)
+
+---
+
+### 📋 Enrolled Students
+![](screenshots/enrolled-students.png)
